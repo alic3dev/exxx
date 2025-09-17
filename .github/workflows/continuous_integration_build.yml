@@ -1,0 +1,33 @@
+name: continuous_integration_build
+on:
+  push:
+    branches: ["core"]
+  pull_request:
+    branches: ["core"]
+jobs:
+  build:
+    name: continuous_integration_build
+    runs-on: macos-latest
+    steps:
+      - name: git_initialization
+        run: git config --global init.defaultBranch core
+      - name: continuous_integration:repository->checkout
+        uses: actions/checkout@v4
+        with:
+          path: exxx
+      - name: checkout_cer0
+        uses: actions/checkout@v4
+        with:
+          repository: alic3dev/cer0
+          path: cer0
+      - name: checkout_clic3
+        uses: actions/checkout@v4
+        with:
+          repository: alic3dev/clic3
+          path: clic3
+      - name: make_cer0
+        run: cd cer0 && make
+      - name: make_clic3
+        run: cd clic3 && make
+      - name: make_exxx
+        run: cd exxx && make
