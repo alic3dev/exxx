@@ -3,7 +3,9 @@ on:
   push:
     branches: ["core"]
   pull_request:
-    branches: ["core"]
+    branches: ["*"]
+env:
+  target_device_version: 15.5
 jobs:
   build:
     name: continuous_integration_build
@@ -25,9 +27,9 @@ jobs:
         with:
           repository: alic3dev/clic3
           path: clic3
-      - name: make_cer0
+      - name: make_cer0 target_device_version=${{ env.target_device_version }}
         run: cd cer0 && make
       - name: make_clic3
-        run: cd clic3 && make
+        run: cd clic3 && make clic3_without_metal target_device_version=${{ env.target_device_version }}
       - name: make_exxx
-        run: cd exxx && make
+        run: cd exxx && make target_device_version=${{ env.target_device_version }}
