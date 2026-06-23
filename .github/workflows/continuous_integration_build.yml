@@ -27,9 +27,16 @@ jobs:
         with:
           repository: alic3dev/clic3
           path: clic3
-      - name: make_cer0 target_device_version=${{ env.target_device_version }}
-        run: cd cer0 && make
+      - name: checkout_math_c
+        uses: actions/checkout@v4
+        with:
+          repository: alic3dev/math_c
+          path: math_c
       - name: make_clic3
         run: cd clic3 && make clic3_without_metal target_device_version=${{ env.target_device_version }}
+      - name: make_math_c
+        run: cd math_c && make math_c_without_metal target_device_version=${{ env.target_device_version }}
+      - name: make_cer0
+        run: cd cer0 && make target_device_version=${{ env.target_device_version }}
       - name: make_exxx
         run: cd exxx && make target_device_version=${{ env.target_device_version }}
